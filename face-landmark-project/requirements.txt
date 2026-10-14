@@ -1,0 +1,25 @@
+# Requirements for the 5-point facial landmark detection project
+# Python 3.11 (the project venv is 3.11.9)
+#
+# Install with:
+#     pip install -r requirements.txt
+#
+# NOTE: the "-r" flag is required. "pip install requirements.txt" would make
+# pip look for a package literally named "requirements.txt" and fail.
+
+opencv-python==5.0.0.93
+dlib==20.0.1
+numpy==2.4.6
+
+# ---------------------------------------------------------------------------
+#  NOT INCLUDED HERE: `mediapipe`, needed by detect_facemesh.py (468/478 pts).
+#
+#  It is deliberately kept out of this file. MediaPipe depends on
+#  `opencv-contrib-python`, which conflicts with the `opencv-python` above
+#  (both install the same `cv2` package), and it may constrain numpy away from
+#  the 2.4.6 pinned here. Installing it into this environment can break the
+#  working 5-point and 68-point scripts.
+#
+#  Install it in its own environment instead - see requirements-facemesh.txt.
+# ---------------------------------------------------------------------------
+

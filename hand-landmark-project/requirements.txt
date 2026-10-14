@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# hand_tracker.py -- runtime dependencies
+#
+# Target interpreter: Python 3.9 - 3.11
+#   (developed against Python 3.11.9 on Windows 11)
+#
+# Install:
+#     python -m venv hand_venv
+#     hand_venv\Scripts\Activate.ps1          # PowerShell
+#     python -m pip install --upgrade pip
+#     python -m pip install -r requirements.txt
+#     curl -L -o hand_landmarker.task https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task
+#
+# `math` is deliberately absent: it is part of the Python standard library.
+#
+# THEN DOWNLOAD THE MODEL -- pip is not enough any more.
+# Since mediapipe 0.10.x removed the legacy `mp.solutions.hands` namespace,
+# hand_tracker.py uses the Tasks API (mediapipe.tasks.python.vision). The Tasks
+# API does NOT bundle its model inside the wheel the way the old namespace did,
+# so `hand_landmarker.task` must be fetched once and kept next to
+# hand_tracker.py (or pointed at with --model-path / model_path=...).
+# ---------------------------------------------------------------------------
+
+# MediaPipe Tasks API -- hand detection + landmark graph.
+#
+# No upper cap: mediapipe 0.10.35 removed `mp.solutions`, so we build on the
+# Tasks API, which is the supported interface going forward. The floor is where
+# the Tasks hand-landmarker became available and stable.
+mediapipe>=0.10.9
+
+# NumPy -- landmark arrays and the dot-product geometry.
+#
+# Capped below 2.0 because the mediapipe wheels ship native extensions built
+# against the NumPy 1.x C ABI; under NumPy 2.x those imports fail with a binary
+# incompatibility error rather than a clean Python exception. Verified working
+# combination on this project: mediapipe 0.10.35 + numpy 1.26.4.
+numpy>=1.24,<2.0
+
+# NOTE: opencv-python is NOT listed.
+#
+# mediapipe already depends on opencv-contrib-python (a strict superset of
+# opencv-python). Installing both puts two distributions in charge of the same
+# `cv2/` directory, and whichever pip writes last wins -- a well-known source of
+# confusing, environment-specific cv2 breakage. mediapipe's own dependency is
+# sufficient; import cv2 works either way.

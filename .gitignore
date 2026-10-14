@@ -1,0 +1,56 @@
+# ===========================================================================
+#  .gitignore  --  landmark-project
+#
+#  Everything listed here is deliberately kept OUT of the Git repository.
+#  If you already committed a file before adding this .gitignore, Git keeps
+#  tracking it; see the "Troubleshooting" section of README.md.
+# ===========================================================================
+
+# --- Virtual environments -------------------------------------------------
+# These are hundreds of megabytes of platform-specific binaries that pip can
+# rebuild from requirements.txt in a minute. Never commit them.
+venv/
+venv_facemesh/
+eye_venv/
+hand_venv/
+.venv/
+env/
+ENV/
+
+# --- Python bytecode caches ----------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# --- Editors / OS ---------------------------------------------------------
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+
+# --- Large dlib model binaries -------------------------------------------
+# ~95 MB decompressed and ~61 MB compressed. Too big to be pleasant in Git
+# (GitHub warns above 50 MB and rejects above 100 MB per file). Download
+# them instead -- copy-paste commands are in README.md.
+*.dat
+*.dat.bz2
+
+# --- Output produced by running the scripts ------------------------------
+# Video recordings (--save), landmark dumps (--landmarks-json) and the
+# annotated stills written by detect_facemesh.py --image.
+*.mp4
+*.avi
+*.mov
+*.mkv
+landmarks*.jsonl
+*_mesh.jpg
+*_mesh.png
+
+# --- Secrets --------------------------------------------------------------
+.env
+*.pem
+*.key

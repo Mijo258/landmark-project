@@ -1,0 +1,41 @@
+# Requirements for detect_facemesh.py  (MediaPipe Face Landmarker, 468/478 pts)
+#
+# ============================================================================
+#  INSTALL THIS INTO A SEPARATE VIRTUAL ENVIRONMENT -- NOT the venv used by
+#  detect_5point.py / detect_68point.py.
+# ============================================================================
+#
+#  Why separation is required:
+#
+#  1. MediaPipe depends on `opencv-contrib-python`. The dlib scripts in this
+#     project use `opencv-python`. These are two DIFFERENT distributions that
+#     both install the same `cv2` package into site-packages. Installing both
+#     into one environment leaves you with a cv2 whose files come from whichever
+#     wheel was unpacked last - a state neither project can rely on.
+#
+#  2. MediaPipe may constrain `numpy`, and your dlib/OpenCV 5 stack currently
+#     resolves to numpy 2.4.6. Letting pip re-resolve numpy in that environment
+#     risks the NumPy 1.x/2.x ABI mismatch that dlib and OpenCV binaries are
+#     sensitive to.
+#
+#  Keeping MediaPipe isolated means the working 5-point and 68-point setups
+#  cannot be broken by anything installed here.
+#
+#  Setup (PowerShell, from the project folder):
+#
+#      python -m venv venv_facemesh
+#      .\venv_facemesh\Scripts\Activate.ps1
+#      pip install -r requirements-facemesh.txt
+#
+#  Then pin exactly what pip resolved, so the environment is reproducible:
+#
+#      pip freeze > requirements-facemesh.lock.txt
+#
+# ----------------------------------------------------------------------------
+#  `mediapipe` is listed with a floor rather than an exact pin on purpose.
+#  MediaPipe pins its own numpy / opencv-contrib-python / protobuf versions, and
+#  hard-pinning the parent package here would fight those constraints. Install,
+#  then freeze (see above) to lock the resolved set.
+# ----------------------------------------------------------------------------
+
+mediapipe>=0.10.14

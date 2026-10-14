@@ -1,0 +1,21 @@
+# Driver Monitoring System (DMS) -- eye landmark & drowsiness tracking
+# Target: Python 3.9 - 3.12
+#
+#   pip install -r requirements.txt
+#
+# NOTE (Windows): `dlib` ships no prebuilt wheels for CPython on PyPI and is
+# compiled from source. Install the toolchain first, otherwise the dlib build
+# fails with "CMake is not installed" / "Cannot find Visual Studio":
+#   - CMake        https://cmake.org/download/  (add to PATH)
+#   - Build Tools  "Desktop development with C++" workload (MSVC + Windows SDK)
+# The dlib build takes several minutes on first install. That is expected.
+
+# Core numerics -------------------------------------------------------------
+numpy>=1.24,<3.0            # landmark math, frame buffers, EAR vectorisation
+scipy>=1.10,<2.0            # scipy.spatial.distance.euclidean for the EAR formula
+
+# Vision --------------------------------------------------------------------
+opencv-python>=4.8,<5.0     # capture, BGR->gray, drawing, imshow (cv2)
+
+# Face detection + 68-point landmark regression -----------------------------
+dlib>=19.24,<20.0           # HOG face detector + shape_predictor_68_face_landmarks
